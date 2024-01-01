@@ -1,0 +1,41 @@
+﻿@model HomeVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="my-5">
+    <form class="row gx-3 gy-2 d-flex justify-content-center" asp-action="GetBooksByNameOrGenre"
+          data-ajax-method="Get"
+          data-ajax="true"
+          data-ajax-success="onModalSuccess">
+        <div class="col-sm-3">
+            <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+            <select name="GenreId"  class="form-select" id="specificSizeSelect">
+                <option selected>Select Genre</option>
+                @foreach (var genre in Model.Genres)
+                {
+                    <option value="@genre.Id">@genre.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <label class="visually-hidden" for="specificSizeInputGroupUsername">Search</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="searchTerm" id="specificSizeInputGroupUsername" placeholder="Search by title">
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary" id="search">Search</button>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="w-100 d-flex flex-wrap justify-content-between books-section">
+    <partial name="_bookPartial" model="@Model.Books" />
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
